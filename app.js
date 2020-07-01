@@ -29,9 +29,9 @@ app.use(session({
   }))
 app.use(morgan('dev'))
 app.use(express.static('public'));
-app.use(routes);  //el router (de routes) lo tengo como un middleware por eso le puedo hacer un 'use.
+app.use(routes);  
 app.use(auth); //middleware
-app.use(errors.http404); //dentro de los errores tendré este middleware
+app.use(errors.http404); 
       
 
 module.exports = app;
