@@ -3,8 +3,9 @@ extends layout
 block content
     section.container
         include header
+        a(href="/logout") Cerrar sesión
         .item
-            form.form(method='POST', action='/')
+            form.form(method='POST', action='/movies')
                 fieldset
                     .box1
                         label(for='movie_id') IMDB id:

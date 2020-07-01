@@ -3,26 +3,27 @@ extends layout
 block content
     section.container
         include header
+        a(href="/logout") Cerrar sesión
         .item
-            -if(data)   //-en este caso al ser un objeto json no necesito poner data.length sino sólo data, así mismo no me hace falta meteme en la posición[0] del array.
-                form.form(method='POST', action=`/update/${data.movie_id}`)    
+            -if(data.length)
+                form.form(method='POST', action=`/movie/update/${data[0].movie_id}`)    
                     fieldset
                         .box1
                             label(for='id') IMDB id:
-                            input(type="text", name="id", value=`${data.movie_id}`, disabled)  
-                            input(type="hidden", name="movie_id", value=`${data.movie_id}`, )
+                            input(type="text", name="id", value=`${data[0].movie_id}`, disabled)  
+                            input(type="hidden", name="movie_id", value=`${data[0].movie_id}`, )
                         .box2
                             label(for='title') Título:
-                            input(type="text", name="title", value=`${data.title}`, required)
+                            input(type="text", name="title", value=`${data[0].title}`, required)
                         .box3
                             label(for='realease_year') Año:
-                            input(type="text", name="release_year", value=`${data.release_year}`, required)
+                            input(type="text", name="release_year", value=`${data[0].release_year}`, required)
                         .box4
                             label(for='rating') Rating:
-                            input(type="text", name="rating", value=`${data.rating}`, required)
+                            input(type="text", name="rating", value=`${data[0].rating}`, required)
                         .box5
                             label(for='image') url de la imagen:
-                            input(type="text", name="image", value=`${data.image}`, required)
+                            input(type="text", name="image", value=`${data[0].image}`, required)
                         .box6
                             input(type="submit", value="Actualizar")
                             input(type="hidden", name="_method", value="PUT")
