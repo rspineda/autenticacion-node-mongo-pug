@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    section.container
+        include header
+        .item
+            form.form(method='POST', action='/')
+                fieldset
+                    .box1
+                        label(for='movie_id') IMDB id:
+                        input(type="text", name="movie_id", required)
+                    .box2
+                        label(for='title') Título:
+                        input(type="text", name="title", required)
+                    .box3
+                        label(for='release_year') Año:
+                        input(type="text", name="release_year", required)
+                    .box4
+                        label(for='rating') Rating:
+                        input(type="text", name="rating", required)
+                    .box5
+                        label(for='image') url de la imagen:
+                        input(type="text", name="image", required)
+                    .box6
+                        input(type="submit", value="Añadir")
+
+        a(href="/") Regresar al home
