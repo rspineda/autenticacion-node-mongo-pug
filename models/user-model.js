@@ -1,4 +1,4 @@
-const authModel = require('./movie-schema'); //para la conexión con la base de datos
+const authModel = require('./user-schema'); //para la conexión con la base de datos
 
 const Auth = ()=>{
 

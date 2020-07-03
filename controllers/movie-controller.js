@@ -1,33 +1,40 @@
-const movieModel = require('../models/movie-model');
+const movieModel = require('../models/movie-model'),
+      errors = require('../middlewares/errors');
+
 
 const ControllerMovie = ()=>{
 };
 
-ControllerMovie.error404 = (req, res, next)=>{
-    let error = new Error();
-    error.status = 404;
-    let locals = {
-        title: "ERROR 404",
-        description: "RECURSO NO ENCONTRADO",
-        error: error
-    }
-    res.render("error", locals);
-};
+
 
 ControllerMovie.getAll = (req, res, next)=>{
-    movieModel.getAll((docs)=>{  //toda esta función la lanzo coo parametro a la función getAll del modelo.
-        let locals = {
-            title: "Lista de Peliculas",
-            data: docs
-        }
-        res.render('index', locals);
-    });
+
+    if(req.session.username){
+        return movieModel.getAll((docs)=>{  // función como parametro a la función getAll del modelo.
+                let locals = {
+                    title: "Lista de Peliculas",
+                    user: req.session.username,
+                    data: docs
+                }
+                res.render('index', locals);
+                });
+    }else{
+        return errors.http401(req,res,next);
+    }
+    
 
 };
+
 
 ControllerMovie.add = (req, res, next)=>{
-    res.render('add-form', {title:'Añadir Película a la base de datos'});
+    if(req.session.username){
+        return res.render('add-form', {title:'Añadir Película a la base de datos'});
+    }else{
+        return errors.http401(req,res,next);
+    }
+    
 };
+
 
 ControllerMovie.saveAdd = (req, res, next)=>{
     let newMovie = {
@@ -37,20 +44,32 @@ ControllerMovie.saveAdd = (req, res, next)=>{
         rating : req.body.rating,
         image: req.body.image 
     };
-    movieModel.save(newMovie, ()=>{res.redirect("/");})
+    if(req.session.username){
+        return movieModel.save(newMovie, ()=>{res.redirect("/");})
+    }else{
+        return errors.http401(req,res,next);
+    }
+    
 };
+
 
 ControllerMovie.update = (req, res, next)=>{
     let movie_id = req.params.movie_id;
-    movieModel.update(movie_id, (doc)=>{
-        let locals = {
-            title : "Editar pelicula",
-            data : doc
-        }
-        //console.log(doc);
-        res.render("edit", locals);
-    })
+    if(req.session.username){
+        return movieModel.update(movie_id, (doc)=>{
+            let locals = {
+                title : "Editar pelicula",
+                data : doc
+            }
+            //console.log(doc);
+            res.render("edit", locals);
+        })
+    }else{
+        return errors.http401(req,res,next);
+    }
+    
 };
+
 
 ControllerMovie.saveUpdate = (req, res, next)=>{
     let oldMovie = {
@@ -63,19 +82,31 @@ ControllerMovie.saveUpdate = (req, res, next)=>{
         rating : req.body.rating,
         image: req.body.image 
     };
-    movieModel.saveUpdate(oldMovie, updatedMovie, (docs)=>{
-        console.log(docs)
-        res.redirect('/');
-    });
+    
+    if(req.session.username){
+        return movieModel.saveUpdate(oldMovie, updatedMovie, (docs)=>{
+            console.log(docs)
+            res.redirect('/');
+        });
+    }else{
+        return errors.http401(req,res,next); 
+    }
+    
 };
 
 ControllerMovie.delete = (req, res, next)=>{
     let movie = {
         movie_id : req.params.movie_id
     }
-    movieModel.delete(movie, ()=>{
-        res.redirect('/');
-    })
+
+    if(req.session.username){
+        return movieModel.delete(movie, ()=>{
+            res.redirect('/');
+        })
+    }else{
+        return errors.http401(req,res,next);
+    }
+    
 };
 
 module.exports = ControllerMovie;
