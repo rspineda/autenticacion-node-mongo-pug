@@ -57,6 +57,7 @@ ControllerMovie.update = (req, res, next)=>{
     let movie_id = req.params.movie_id;
     if(req.session.username){
         return movieModel.update(movie_id, (doc)=>{
+            console.log(doc)
             let locals = {
                 title : "Editar pelicula",
                 data : doc

@@ -1,10 +1,5 @@
-const config = require('./db-config'),
-        mongoose = require('./mongo-connection'), //para la conexion con mongo
+const mongoose = require('./mongo-connection'), //para la conexion con mongo
         Schema = mongoose.Schema;
-
-       
-//mongoose.connect(`mongodb://${config.mongo.host}/${config.mongo.db}`, );
-
 
 //estructura del esquema de las pelis en mongo
 const movieSchema = new Schema({
@@ -17,8 +12,6 @@ const movieSchema = new Schema({
 
 //creo el modelo para utilizar el esquema de Mongoose
 Movie = mongoose.model ("Movie", movieSchema);
-
-
 
 
 module.exports = Movie;

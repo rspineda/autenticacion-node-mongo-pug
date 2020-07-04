@@ -1,5 +1,4 @@
-const config = require('./db-config'),
-        mongoose = require('./mongo-connection'), //para la coneccion con mongo
+const mongoose = require('./mongo-connection'), //para la coneccion con mongo
         Schema = mongoose.Schema;
 
 //estructura del esquema de los usuarios autenticados, en mongo

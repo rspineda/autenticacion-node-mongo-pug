@@ -1,5 +1,5 @@
 const config = require('./db-config'),
-      mongoose = require('mongoose'),  
+      mongoose = require('mongoose')  
 
 
 //conecto con mongo 
